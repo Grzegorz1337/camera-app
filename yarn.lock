@@ -5355,6 +5355,11 @@ react-native-gradle-plugin@^0.0.6:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.6.tgz#b61a9234ad2f61430937911003cddd7e15c72b45"
   integrity sha512-eIlgtsmDp1jLC24dRn43hB3kEcZVqx6DUQbR0N1ABXGnMEafm9I3V3dUUeD1vh+Dy5WqijSoEwLNUPLgu5zDMg==
 
+react-native-plist@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-plist/-/react-native-plist-1.0.2.tgz#65e5c5ac4325065c06a16f2c0690df09344db937"
+  integrity sha512-/IKWf2eOcow0OSHO2zC1nWBq/9WbwnUl7ftMrCGOzR84gZANKOEIVKNViu/5XeCbXEr913agn/mcr/rQDuuHtw==
+
 react-native-web@0.17.7:
   version "0.17.7"
   resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.17.7.tgz#038899dbc94467a0ca0be214b88a30e0c117b176"

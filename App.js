@@ -22,6 +22,7 @@ export default function App() {
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [isVideoRecording, setIsVideoRecording] = useState(false);
   const [videoSource, setVideoSource] = useState(null);
+  const [picData, setPicData] = useState(null);
   const cameraRef = useRef();
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function App() {
       if (source) {
         await cameraRef.current.pausePreview();
         setIsPreview(true);
-        console.log("picture source", source);
+        setPicData(data);
       }
     }
   };
@@ -95,6 +96,25 @@ export default function App() {
     setVideoSource(null);
   };
 
+  const sendFileToServer = async () => {
+    let base64Img = `data:image/jpg;base64,${picData.base64}`;
+    let apiUrl = "http://192.168.0.112:3000/upload-by-string";
+
+    let data = {
+      photo: base64Img,
+      upload_preset: "<your-upload-preset>",
+    };
+    let response = await fetch(apiUrl, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+    });
+    let responseData = await response.json;
+  };
+
   const renderCancelPreviewButton = () => (
     <TouchableOpacity onPress={cancelPreview} style={styles.closeButton}>
       <View style={[styles.closeCross, { transform: [{ rotate: "45deg" }] }]} />
@@ -117,6 +137,12 @@ export default function App() {
       <View style={styles.recordDot} />
       <Text style={styles.recordTitle}>{"Recording..."}</Text>
     </View>
+  );
+
+  const renderUploadButton = () => (
+    <TouchableOpacity style={styles.btnSection} onPress={sendFileToServer}>
+      <Text style={styles.btnText}>Wyślij</Text>
+    </TouchableOpacity>
   );
 
   const renderCaptureControl = () => (
@@ -159,6 +185,7 @@ export default function App() {
         {isVideoRecording && renderVideoRecordIndicator()}
         {videoSource && renderVideoPlayer()}
         {isPreview && renderCancelPreviewButton()}
+        {isPreview && !videoSource && renderUploadButton()}
         {!videoSource && !isPreview && renderCaptureControl()}
       </View>
     </SafeAreaView>
@@ -230,5 +257,23 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
+  },
+  btnSection: {
+    width: 50,
+    height: 50,
+    position: "absolute",
+    bottom: 40,
+    left: 10,
+    backgroundColor: "#DCDCDC",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 3,
+    marginBottom: 10,
+  },
+  btnText: {
+    textAlign: "center",
+    color: "gray",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
